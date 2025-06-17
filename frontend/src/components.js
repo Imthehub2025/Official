@@ -164,6 +164,17 @@ export const Header = ({
             <div className="absolute -top-1 -right-1 w-3 h-3 bg-red-500 rounded-full animate-pulse"></div>
           </motion.button>
 
+          {/* Device Integration */}
+          <motion.button 
+            onClick={onOpenDeviceIntegration}
+            className="text-white hover:text-gray-300 transition-colors"
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.9 }}
+            title="Device Integration - XR, Bluetooth, Screen Mirroring"
+          >
+            <Settings size={20} />
+          </motion.button>
+
           {/* User Profile Menu */}
           <div className="relative">
             <motion.button
