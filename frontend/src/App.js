@@ -86,6 +86,13 @@ function App() {
     return () => clearTimeout(timeoutId);
   }, [searchQuery]);
 
+  // Load more search results (placeholder for compatibility)
+  const handleLoadMoreSearch = useCallback(() => {
+    // This function is kept for compatibility with SearchResults component
+    // Enhanced search handles its own pagination
+    console.log('Load more search - handled by enhanced search');
+  }, []);
+
   // Video player handlers
   const handlePlayVideo = useCallback((content) => {
     setVideoPlayerContent(content);
