@@ -29,7 +29,8 @@ import {
   Clock,
   Users,
   TrendingUp,
-  Award
+  Award,
+  Glasses
 } from 'lucide-react';
 import { userService, watchlistService } from './services/userService';
 
