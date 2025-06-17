@@ -60,6 +60,8 @@ function App() {
   // Video player state
   const [showVideoPlayer, setShowVideoPlayer] = useState(false);
   const [videoPlayerContent, setVideoPlayerContent] = useState(null);
+  const [showXRPlayer, setShowXRPlayer] = useState(false);
+  const [showDeviceIntegration, setShowDeviceIntegration] = useState(false);
   
   // User state
   const [currentUser, setCurrentUser] = useState(userService.getCurrentUser());
