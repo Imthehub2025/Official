@@ -128,6 +128,7 @@ export const Header = ({
                   placeholder="Search movies, TV shows..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
+                  onFocus={() => setShowSearch(false)}
                   className="bg-black/50 border border-gray-600 rounded-lg px-4 py-2 text-white placeholder-gray-400 focus:outline-none focus:border-purple-500 transition-colors w-64"
                   autoFocus
                 />
