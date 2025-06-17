@@ -291,6 +291,7 @@ function App() {
         );
 
       case 'library':
+      case 'library':
         return (
           <LibrarySection
             currentUser={currentUser}
