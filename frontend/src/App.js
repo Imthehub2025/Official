@@ -491,7 +491,7 @@ function App() {
         searchQuery={searchQuery}
         setSearchQuery={setSearchQuery}
         showSearch={showSearch}
-        setShowSearch={setShowSearch}
+        setShowSearch={handleOpenEnhancedSearch}
         currentSection={currentSection}
         onSectionChange={handleSectionChange}
         currentUser={currentUser}
