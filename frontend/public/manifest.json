@@ -1,0 +1,87 @@
+{
+  "name": "Quantum Media Hub (Throne Edition)",
+  "short_name": "QuantumMedia",
+  "description": "Advanced streaming platform with XR support, powered by Trillions",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#000000",
+  "theme_color": "#8b5cf6",
+  "orientation": "any",
+  "scope": "/",
+  "categories": ["entertainment", "multimedia", "social"],
+  "lang": "en-US",
+  "dir": "ltr",
+  "iarc_rating_id": "",
+  "prefer_related_applications": false,
+  "icons": [
+    {
+      "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTkyIiBoZWlnaHQ9IjE5MiIgdmlld0JveD0iMCAwIDE5MiAxOTIiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIxOTIiIGhlaWdodD0iMTkyIiByeD0iMjQiIGZpbGw9InVybCgjZ3JhZGllbnQwX2xpbmVhcl8xXzEpIi8+CjxwYXRoIGQ9Ik00OCA5NkM0OCA3MS45MDg2IDY3LjkwODYgNTIgOTIgNTJIMTAwQzEyNC4wOTEgNTIgMTQ0IDcxLjkwODYgMTQ0IDk2VjEwMEMxNDQgMTI0LjA5MSAxMjQuMDkxIDE0NCAxMDAgMTQ0SDkyQzY3LjkwODYgMTQ0IDQ4IDEyNC4wOTEgNDggMTAwVjk2WiIgZmlsbD0iIzhiNWNmNiIvPgo8cGF0aCBkPSJNNzIgODBDNzIgNzEuMTYzNCA3OS4xNjM0IDY0IDg4IDY0SDEwNEMxMTIuODM3IDY0IDEyMCA3MS4xNjM0IDEyMCA4MFYxMTJDMTIwIDEyMC44MzcgMTEyLjgzNyAxMjggMTA0IDEyOEg4OEM3OS4xNjM0IDEyOCA3MiAxMjAuODM3IDcyIDExMlY4MFoiIGZpbGw9IndoaXRlIi8+CjxkZWZzPgo8bGluZWFyR3JhZGllbnQgaWQ9ImdyYWRpZW50MF9saW5lYXJfMV8xIiB4MT0iMCIgeTE9IjAiIHgyPSIxOTIiIHkyPSIxOTIiIGdyYWRpZW50VW5pdHM9InVzZXJTcGFjZU9uVXNlIj4KPHN0b3Agc3RvcC1jb2xvcj0iIzEwMTAyMyIvPgo8c3RvcCBvZmZzZXQ9IjEiIHN0b3AtY29sb3I9IiMzNzMwNjIiLz4KPC9saW5lYXJHcmFkaWVudD4KPC9kZWZzPgo8L3N2Zz4K",
+      "sizes": "192x192",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNTEyIiBoZWlnaHQ9IjUxMiIgdmlld0JveD0iMCAwIDUxMiA1MTIiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSI1MTIiIGhlaWdodD0iNTEyIiByeD0iNjQiIGZpbGw9InVybCgjZ3JhZGllbnQwX2xpbmVhcl8xXzEpIi8+CjxwYXRoIGQ9Ik0xMjggMjU2QzEyOCAxOTIuNDM1IDE4MC40MzUgMTQwIDI0NCAxNDBIMjY4QzMzMS41NjUgMTQwIDM4NCAxOTIuNDM1IDM4NCAyNTZWMjY4QzM4NCAzMzEuNTY1IDMzMS41NjUgMzg0IDI2OCAzODRIMjQ0QzE4MC40MzUgMzg0IDEyOCAzMzEuNTY1IDEyOCAyNjhWMjU2WiIgZmlsbD0iIzhiNWNmNiIvPgo8cGF0aCBkPSJNMTkyIDIxNkMxOTIgMTkwLjI1NiAyMTMuMjU2IDE2OSAyMzkgMTY5SDI3M0MyOTguNzQ0IDE2OSAzMjAgMTkwLjI1NiAzMjAgMjE2VjI5NkMzMjAgMzIxLjc0NCAyOTguNzQ0IDM0MyAyNzMgMzQzSDIzOUMyMTMuMjU2IDM0MyAxOTIgMzIxLjc0NCAxOTIgMjk2VjIxNloiIGZpbGw9IndoaXRlIi8+CjxkZWZzPgo8bGluZWFyR3JhZGllbnQgaWQ9ImdyYWRpZW50MF9saW5lYXJfMV8xIiB4MT0iMCIgeTE9IjAiIHgyPSI1MTIiIHkyPSI1MTIiIGdyYWRpZW50VW5pdHM9InVzZXJTcGFjZU9uVXNlIj4KPHN0b3Agc3RvcC1jb2xvcj0iIzEwMTAyMyIvPgo8c3RvcCBvZmZzZXQ9IjEiIHN0b3AtY29sb3I9IiMzNzMwNjIiLz4KPC9saW5lYXJHcmFkaWVudD4KPC9kZWZzPgo8L3N2Zz4K",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTI4MCIgaGVpZ2h0PSI3MjAiIHZpZXdCb3g9IjAgMCAxMjgwIDcyMCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjEyODAiIGhlaWdodD0iNzIwIiBmaWxsPSIjMDAwMDAwIi8+Cjx0ZXh0IHg9IjY0MCIgeT0iMzYwIiBmaWxsPSIjOGI1Y2Y2IiBmb250LXNpemU9IjQ4IiBmb250LXdlaWdodD0iYm9sZCIgdGV4dC1hbmNob3I9Im1pZGRsZSI+UXVhbnR1bSBNZWRpYSBIdWI8L3RleHQ+Cjx0ZXh0IHg9IjY0MCIgeT0iNDIwIiBmaWxsPSIjOTMzM2VhIiBmb250LXNpemU9IjI0IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIj5YUiAmIEFkdmFuY2VkIERldmljZSBTdXBwb3J0PC90ZXh0Pgo8L3N2Zz4K",
+      "sizes": "1280x720",
+      "type": "image/svg+xml",
+      "form_factor": "wide"
+    }
+  ],
+  "features": [
+    "Cross Platform",
+    "Background Sync",
+    "Installable",
+    "VR/AR Support",
+    "Bluetooth Integration",
+    "Screen Mirroring"
+  ],
+  "shortcuts": [
+    {
+      "name": "Library",
+      "short_name": "Library",
+      "description": "Access your personal media library",
+      "url": "/?section=library",
+      "icons": [
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iOTYiIGhlaWdodD0iOTYiIHZpZXdCb3g9IjAgMCA5NiA5NiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9Ijk2IiBoZWlnaHQ9Ijk2IiByeD0iMTIiIGZpbGw9IiM4YjVjZjYiLz4KPHBhdGggZD0iTTI0IDMyQzI0IDI5LjI0IDI2LjI0IDI3IDI5IDI3SDY3QzY5Ljc2IDI3IDcyIDI5LjI0IDcyIDMyVjY0QzcyIDY2Ljc2IDY5Ljc2IDY5IDY3IDY5SDI5QzI2LjI0IDY5IDI0IDY2Ljc2IDI0IDY0VjMyWiIgZmlsbD0id2hpdGUiLz4KPC9zdmc+",
+          "sizes": "96x96",
+          "type": "image/svg+xml"
+        }
+      ]
+    },
+    {
+      "name": "XR Mode",
+      "short_name": "XR",
+      "description": "Launch in VR/AR mode",
+      "url": "/?xr=true",
+      "icons": [
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iOTYiIGhlaWdodD0iOTYiIHZpZXdCb3g9IjAgMCA5NiA5NiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9Ijk2IiBoZWlnaHQ9Ijk2IiByeD0iMTIiIGZpbGw9IiM5MzMzZWEiLz4KPGNpcmNsZSBjeD0iMzYiIGN5PSI0MCIgcj0iOCIgZmlsbD0id2hpdGUiLz4KPGNpcmNsZSBjeD0iNjAiIGN5PSI0MCIgcj0iOCIgZmlsbD0id2hpdGUiLz4KPHBhdGggZD0iTTMwIDU2SDE4QzE2LjkgNTYgMTYgNTYuOSAxNiA1OFY2NkMxNiA2Ny4xIDE2LjkgNjggMTggNjhIMzBDMzEuMSA2OCAzMiA2Ny4xIDMyIDY2VjU4QzMyIDU2LjkgMzEuMSA1NiAzMCA1NloiIGZpbGw9IndoaXRlIi8+Cjwvc3ZnPg==",
+          "sizes": "96x96",
+          "type": "image/svg+xml"
+        }
+      ]
+    }
+  ],
+  "protocol_handlers": [
+    {
+      "protocol": "web+quantummedia",
+      "url": "/?handler=%s"
+    }
+  ],
+  "related_applications": [],
+  "edge_side_panel": {
+    "preferred_width": 400
+  },
+  "launch_handler": {
+    "client_mode": "focus-existing"
+  }
+}
