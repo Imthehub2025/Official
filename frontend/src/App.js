@@ -290,6 +290,13 @@ function App() {
           />
         );
 
+        return (
+          <LibrarySection
+            currentUser={currentUser}
+            onPlayVideo={handlePlayVideo}
+          />
+        );
+
       case 'my-list':
         return (
           <MyListSection
