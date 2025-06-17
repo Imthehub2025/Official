@@ -19,97 +19,35 @@ import {
   VolumeX,
   ThumbsUp,
   ThumbsDown,
-  Share2
+  Share2,
+  Check,
+  Edit3,
+  Trash2,
+  Settings,
+  LogOut,
+  Calendar,
+  Clock,
+  Users,
+  TrendingUp,
+  Award
 } from 'lucide-react';
+import { userService, watchlistService } from './services/userService';
 
-// Mock data for TMDB-style content
-const mockMovies = [
-  {
-    id: 1,
-    title: "Quantum Odyssey",
-    overview: "A mind-bending journey through parallel dimensions where reality bends to quantum mechanics.",
-    backdrop_path: "https://images.unsplash.com/photo-1720962158789-9389a4f399da",
-    poster_path: "https://images.unsplash.com/photo-1642796418561-88ab301fcdf9",
-    genre_ids: [28, 878, 53],
-    release_date: "2024-12-15",
-    vote_average: 8.7,
-    runtime: 142,
-    trailer_key: "dQw4w9WgXcQ",
-    genres: ["Action", "Sci-Fi", "Thriller"]
-  },
-  {
-    id: 2,
-    title: "Throne of Infinity",
-    overview: "An epic tale of power, betrayal, and cosmic forces beyond imagination.",
-    backdrop_path: "https://images.unsplash.com/photo-1704389687598-34f8c28cc4fd",
-    poster_path: "https://images.pexels.com/photos/7649105/pexels-photo-7649105.jpeg",
-    genre_ids: [18, 14, 10752],
-    release_date: "2024-11-22",
-    vote_average: 9.2,
-    runtime: 156,
-    trailer_key: "dQw4w9WgXcQ",
-    genres: ["Drama", "Fantasy", "War"]
-  },
-  {
-    id: 3,
-    title: "Digital Horizon",
-    overview: "In a world where technology controls everything, one person holds the key to freedom.",
-    backdrop_path: "https://images.unsplash.com/photo-1720962158858-5fb16991d2b8",
-    poster_path: "https://images.unsplash.com/photo-1717944097660-352ec0dc5c1f",
-    genre_ids: [878, 28, 18],
-    release_date: "2024-10-18",
-    vote_average: 8.4,
-    runtime: 128,
-    trailer_key: "dQw4w9WgXcQ",
-    genres: ["Sci-Fi", "Action", "Drama"]
-  },
-  {
-    id: 4,
-    title: "Neon Dreams",
-    overview: "A cyberpunk thriller set in the near future where dreams become reality.",
-    backdrop_path: "https://images.unsplash.com/photo-1619850015546-84a1c7b7aed0",
-    poster_path: "https://images.unsplash.com/photo-1577045060575-07424f4e7aa7",
-    genre_ids: [878, 53, 80],
-    release_date: "2024-09-30",
-    vote_average: 8.1,
-    runtime: 134,
-    trailer_key: "dQw4w9WgXcQ",
-    genres: ["Sci-Fi", "Thriller", "Crime"]
-  }
-];
-
-const mockTVShows = [
-  {
-    id: 101,
-    name: "Quantum Chronicles",
-    overview: "A series exploring the mysteries of quantum physics through thrilling adventures.",
-    backdrop_path: "https://images.unsplash.com/photo-1720962158789-9389a4f399da",
-    poster_path: "https://images.unsplash.com/photo-1642796418561-88ab301fcdf9",
-    genre_ids: [878, 18, 9648],
-    first_air_date: "2024-01-15",
-    vote_average: 8.9,
-    number_of_seasons: 3,
-    trailer_key: "dQw4w9WgXcQ",
-    genres: ["Sci-Fi", "Drama", "Mystery"]
-  },
-  {
-    id: 102,
-    name: "Throne Wars",
-    overview: "Epic battles for the ultimate throne that controls all realities.",
-    backdrop_path: "https://images.unsplash.com/photo-1704389687598-34f8c28cc4fd",
-    poster_path: "https://images.pexels.com/photos/7649105/pexels-photo-7649105.jpeg",
-    genre_ids: [14, 18, 10759],
-    first_air_date: "2024-03-20",
-    vote_average: 9.1,
-    number_of_seasons: 2,
-    trailer_key: "dQw4w9WgXcQ",
-    genres: ["Fantasy", "Drama", "Action & Adventure"]
-  }
-];
-
-// Header Component
-export const Header = ({ searchQuery, setSearchQuery, showSearch, setShowSearch }) => {
+// Header Component with full navigation
+export const Header = ({ 
+  searchQuery, 
+  setSearchQuery, 
+  showSearch, 
+  setShowSearch,
+  currentSection,
+  onSectionChange,
+  currentUser,
+  onUserChange,
+  showUserMenu,
+  setShowUserMenu
+}) => {
   const [scrolled, setScrolled] = useState(false);
+  const allUsers = userService.getAllUsers();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -118,6 +56,13 @@ export const Header = ({ searchQuery, setSearchQuery, showSearch, setShowSearch 
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  const navigationItems = [
+    { id: 'home', label: 'Home', icon: Home },
+    { id: 'movies', label: 'Movies', icon: Film },
+    { id: 'tv-shows', label: 'TV Shows', icon: Tv },
+    { id: 'my-list', label: 'My List', icon: Bookmark }
+  ];
 
   return (
     <motion.header 
@@ -131,9 +76,10 @@ export const Header = ({ searchQuery, setSearchQuery, showSearch, setShowSearch 
       <div className="container mx-auto px-4 py-4 flex items-center justify-between">
         {/* Logo */}
         <motion.div 
-          className="flex items-center space-x-2"
+          className="flex items-center space-x-2 cursor-pointer"
           whileHover={{ scale: 1.05 }}
           transition={{ type: "spring", stiffness: 300 }}
+          onClick={() => onSectionChange('home')}
         >
           <div className="text-2xl font-bold bg-gradient-to-r from-red-500 via-purple-500 to-blue-500 bg-clip-text text-transparent">
             Quantum Media Hub
@@ -145,22 +91,24 @@ export const Header = ({ searchQuery, setSearchQuery, showSearch, setShowSearch 
 
         {/* Navigation */}
         <nav className="hidden md:flex items-center space-x-8">
-          <motion.a href="#" className="text-white hover:text-gray-300 transition-colors flex items-center space-x-2" whileHover={{ scale: 1.1 }}>
-            <Home size={16} />
-            <span>Home</span>
-          </motion.a>
-          <motion.a href="#" className="text-white hover:text-gray-300 transition-colors flex items-center space-x-2" whileHover={{ scale: 1.1 }}>
-            <Film size={16} />
-            <span>Movies</span>
-          </motion.a>
-          <motion.a href="#" className="text-white hover:text-gray-300 transition-colors flex items-center space-x-2" whileHover={{ scale: 1.1 }}>
-            <Tv size={16} />
-            <span>TV Shows</span>
-          </motion.a>
-          <motion.a href="#" className="text-white hover:text-gray-300 transition-colors flex items-center space-x-2" whileHover={{ scale: 1.1 }}>
-            <Bookmark size={16} />
-            <span>My List</span>
-          </motion.a>
+          {navigationItems.map((item) => {
+            const Icon = item.icon;
+            return (
+              <motion.button
+                key={item.id}
+                onClick={() => onSectionChange(item.id)}
+                className={`flex items-center space-x-2 transition-colors ${
+                  currentSection === item.id 
+                    ? 'text-white font-semibold' 
+                    : 'text-gray-300 hover:text-white'
+                }`}
+                whileHover={{ scale: 1.1 }}
+              >
+                <Icon size={16} />
+                <span>{item.label}</span>
+              </motion.button>
+            );
+          })}
         </nav>
 
         {/* Right Section */}
@@ -176,10 +124,10 @@ export const Header = ({ searchQuery, setSearchQuery, showSearch, setShowSearch 
               >
                 <input
                   type="text"
-                  placeholder="Search content..."
+                  placeholder="Search movies, TV shows..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="bg-black/50 border border-gray-600 rounded-lg px-4 py-2 text-white placeholder-gray-400 focus:outline-none focus:border-purple-500 transition-colors"
+                  className="bg-black/50 border border-gray-600 rounded-lg px-4 py-2 text-white placeholder-gray-400 focus:outline-none focus:border-purple-500 transition-colors w-64"
                   autoFocus
                 />
                 <motion.button
@@ -205,19 +153,96 @@ export const Header = ({ searchQuery, setSearchQuery, showSearch, setShowSearch 
 
           {/* Notifications */}
           <motion.button 
-            className="text-white hover:text-gray-300 transition-colors"
+            className="text-white hover:text-gray-300 transition-colors relative"
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.9 }}
           >
             <Bell size={20} />
+            <div className="absolute -top-1 -right-1 w-3 h-3 bg-red-500 rounded-full animate-pulse"></div>
           </motion.button>
 
-          {/* Profile */}
-          <motion.div className="flex items-center space-x-2" whileHover={{ scale: 1.05 }}>
-            <div className="w-8 h-8 bg-gradient-to-r from-purple-500 to-blue-500 rounded-full flex items-center justify-center">
-              <User size={16} className="text-white" />
-            </div>
-          </motion.div>
+          {/* User Profile Menu */}
+          <div className="relative">
+            <motion.button
+              onClick={() => setShowUserMenu(!showUserMenu)}
+              className="flex items-center space-x-2"
+              whileHover={{ scale: 1.05 }}
+            >
+              <img
+                src={currentUser.avatar}
+                alt={currentUser.name}
+                className="w-8 h-8 rounded-full object-cover"
+              />
+              <ChevronRight 
+                size={16} 
+                className={`text-white transition-transform ${showUserMenu ? 'rotate-90' : ''}`}
+              />
+            </motion.button>
+
+            <AnimatePresence>
+              {showUserMenu && (
+                <motion.div
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -10 }}
+                  className="absolute right-0 top-12 bg-black/90 backdrop-blur-md border border-gray-700 rounded-lg p-4 w-64"
+                >
+                  {/* Current User Info */}
+                  <div className="flex items-center space-x-3 pb-3 border-b border-gray-700 mb-3">
+                    <img
+                      src={currentUser.avatar}
+                      alt={currentUser.name}
+                      className="w-10 h-10 rounded-full object-cover"
+                    />
+                    <div>
+                      <p className="text-white font-semibold">{currentUser.name}</p>
+                      <p className="text-gray-400 text-xs">
+                        {currentUser.isKids ? 'Kids Profile' : 'Adult Profile'}
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* Other Users */}
+                  <div className="space-y-2 mb-3">
+                    {allUsers.filter(user => user.id !== currentUser.id).map((user) => (
+                      <motion.button
+                        key={user.id}
+                        onClick={() => {
+                          onUserChange(user);
+                          setShowUserMenu(false);
+                        }}
+                        className="flex items-center space-x-3 w-full text-left hover:bg-gray-800/50 rounded-lg p-2 transition-colors"
+                        whileHover={{ scale: 1.02 }}
+                      >
+                        <img
+                          src={user.avatar}
+                          alt={user.name}
+                          className="w-8 h-8 rounded-full object-cover"
+                        />
+                        <span className="text-gray-300">{user.name}</span>
+                      </motion.button>
+                    ))}
+                  </div>
+
+                  {/* Menu Options */}
+                  <div className="border-t border-gray-700 pt-3 space-y-2">
+                    <button className="flex items-center space-x-3 w-full text-left text-gray-300 hover:text-white transition-colors">
+                      <Edit3 size={16} />
+                      <span>Manage Profiles</span>
+                    </button>
+                    <button className="flex items-center space-x-3 w-full text-left text-gray-300 hover:text-white transition-colors">
+                      <Settings size={16} />
+                      <span>Account Settings</span>
+                    </button>
+                    <button className="flex items-center space-x-3 w-full text-left text-gray-300 hover:text-white transition-colors">
+                      <LogOut size={16} />
+                      <span>Sign Out</span>
+                    </button>
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
         </div>
       </div>
 
@@ -231,9 +256,29 @@ export const Header = ({ searchQuery, setSearchQuery, showSearch, setShowSearch 
   );
 };
 
-// Hero Banner Component
-export const HeroBanner = ({ featuredContent, onPlayTrailer, onShowInfo }) => {
+// Enhanced Hero Banner with real data
+export const HeroBanner = ({ featuredContent, onPlayTrailer, onShowInfo, currentUser, onToggleWatchlist }) => {
   const [isMuted, setIsMuted] = useState(true);
+  const [isInWatchlist, setIsInWatchlist] = useState(false);
+
+  useEffect(() => {
+    if (featuredContent && currentUser) {
+      setIsInWatchlist(
+        watchlistService.isInWatchlist(
+          currentUser.id, 
+          featuredContent.id, 
+          featuredContent.media_type
+        )
+      );
+    }
+  }, [featuredContent, currentUser]);
+
+  if (!featuredContent) return null;
+
+  const handleToggleWatchlist = () => {
+    onToggleWatchlist(featuredContent);
+    setIsInWatchlist(!isInWatchlist);
+  };
 
   return (
     <div className="relative h-screen overflow-hidden">
@@ -295,6 +340,20 @@ export const HeroBanner = ({ featuredContent, onPlayTrailer, onShowInfo }) => {
                 <Info size={20} />
                 <span>More Info</span>
               </motion.button>
+
+              <motion.button
+                onClick={handleToggleWatchlist}
+                className={`flex items-center space-x-3 px-8 py-3 rounded-lg font-semibold transition-colors ${
+                  isInWatchlist 
+                    ? 'bg-green-600/70 hover:bg-green-600/90 text-white' 
+                    : 'bg-gray-800/70 hover:bg-gray-800/90 text-white'
+                }`}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                {isInWatchlist ? <Check size={20} /> : <Plus size={20} />}
+                <span>{isInWatchlist ? 'In My List' : 'Add to List'}</span>
+              </motion.button>
             </motion.div>
 
             <motion.div 
@@ -305,35 +364,59 @@ export const HeroBanner = ({ featuredContent, onPlayTrailer, onShowInfo }) => {
             >
               <div className="flex items-center space-x-1">
                 <Star size={16} className="text-yellow-400" fill="currentColor" />
-                <span className="text-sm font-semibold">{featuredContent.vote_average}</span>
+                <span className="text-sm font-semibold">{featuredContent.vote_average?.toFixed(1)}</span>
               </div>
               <div className="text-sm text-gray-300">
-                {featuredContent.release_date?.split('-')[0] || featuredContent.first_air_date?.split('-')[0]}
+                {new Date(featuredContent.release_date || featuredContent.first_air_date).getFullYear()}
               </div>
-              <div className="text-sm text-gray-300">
-                {featuredContent.runtime ? `${featuredContent.runtime} min` : `${featuredContent.number_of_seasons} Seasons`}
+              {featuredContent.runtime && (
+                <div className="text-sm text-gray-300">
+                  {featuredContent.runtime} min
+                </div>
+              )}
+              {featuredContent.number_of_seasons && (
+                <div className="text-sm text-gray-300">
+                  {featuredContent.number_of_seasons} Season{featuredContent.number_of_seasons > 1 ? 's' : ''}
+                </div>
+              )}
+              <div className="px-2 py-1 bg-gray-800/70 rounded text-xs font-semibold">
+                {featuredContent.media_type === 'movie' ? 'MOVIE' : 'TV SERIES'}
               </div>
             </motion.div>
           </div>
         </div>
       </div>
 
-      {/* Mute Button */}
-      <motion.button
-        onClick={() => setIsMuted(!isMuted)}
-        className="absolute bottom-8 right-8 w-12 h-12 bg-black/50 border border-gray-600 rounded-full flex items-center justify-center text-white hover:bg-black/70 transition-colors"
-        whileHover={{ scale: 1.1 }}
-        whileTap={{ scale: 0.9 }}
-      >
-        {isMuted ? <VolumeX size={20} /> : <Volume2 size={20} />}
-      </motion.button>
+      {/* Controls */}
+      <div className="absolute bottom-8 right-8 flex items-center space-x-4">
+        <motion.button
+          onClick={() => setIsMuted(!isMuted)}
+          className="w-12 h-12 bg-black/50 border border-gray-600 rounded-full flex items-center justify-center text-white hover:bg-black/70 transition-colors"
+          whileHover={{ scale: 1.1 }}
+          whileTap={{ scale: 0.9 }}
+        >
+          {isMuted ? <VolumeX size={20} /> : <Volume2 size={20} />}
+        </motion.button>
+      </div>
     </div>
   );
 };
 
-// Content Row Component
-export const ContentRow = ({ title, content, onItemClick, onPlayTrailer }) => {
+// Enhanced Content Row with infinite scrolling
+export const ContentRow = ({ 
+  title, 
+  content, 
+  onItemClick, 
+  onPlayTrailer, 
+  currentUser, 
+  onToggleWatchlist,
+  loading = false,
+  onLoadMore = null,
+  icon = null
+}) => {
   const scrollRef = useRef(null);
+  const [showLeftButton, setShowLeftButton] = useState(false);
+  const [showRightButton, setShowRightButton] = useState(true);
 
   const scroll = (direction) => {
     if (scrollRef.current) {
@@ -345,27 +428,57 @@ export const ContentRow = ({ title, content, onItemClick, onPlayTrailer }) => {
     }
   };
 
+  const handleScroll = () => {
+    if (scrollRef.current) {
+      const { scrollLeft, scrollWidth, clientWidth } = scrollRef.current;
+      setShowLeftButton(scrollLeft > 0);
+      setShowRightButton(scrollLeft < scrollWidth - clientWidth - 10);
+    }
+  };
+
+  useEffect(() => {
+    const scrollElement = scrollRef.current;
+    if (scrollElement) {
+      scrollElement.addEventListener('scroll', handleScroll);
+      handleScroll(); // Initial check
+      return () => scrollElement.removeEventListener('scroll', handleScroll);
+    }
+  }, [content]);
+
+  if (!content || content.length === 0) return null;
+
   return (
     <div className="mb-12">
-      <motion.h2 
-        className="text-2xl font-bold text-white mb-4 px-4"
+      <motion.div
+        className="flex items-center space-x-3 mb-4 px-4"
         initial={{ opacity: 0, x: -20 }}
         whileInView={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.6 }}
       >
-        {title}
-      </motion.h2>
+        {icon && <span className="text-2xl">{icon}</span>}
+        <h2 className="text-2xl font-bold text-white">{title}</h2>
+        {loading && (
+          <div className="w-6 h-6 border-2 border-purple-500 border-t-transparent rounded-full animate-spin"></div>
+        )}
+      </motion.div>
 
       <div className="relative group">
         {/* Scroll Left Button */}
-        <motion.button
-          onClick={() => scroll('left')}
-          className="absolute left-2 top-1/2 transform -translate-y-1/2 z-10 w-12 h-12 bg-black/70 rounded-full flex items-center justify-center text-white opacity-0 group-hover:opacity-100 transition-opacity"
-          whileHover={{ scale: 1.1 }}
-          whileTap={{ scale: 0.9 }}
-        >
-          <ChevronLeft size={24} />
-        </motion.button>
+        <AnimatePresence>
+          {showLeftButton && (
+            <motion.button
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => scroll('left')}
+              className="absolute left-2 top-1/2 transform -translate-y-1/2 z-10 w-12 h-12 bg-black/70 rounded-full flex items-center justify-center text-white hover:bg-black/90 transition-colors"
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.9 }}
+            >
+              <ChevronLeft size={24} />
+            </motion.button>
+          )}
+        </AnimatePresence>
 
         {/* Content Grid */}
         <div 
@@ -375,32 +488,81 @@ export const ContentRow = ({ title, content, onItemClick, onPlayTrailer }) => {
         >
           {content.map((item, index) => (
             <ContentCard
-              key={item.id}
+              key={`${item.id}-${item.media_type}-${index}`}
               item={item}
               onItemClick={onItemClick}
               onPlayTrailer={onPlayTrailer}
+              onToggleWatchlist={onToggleWatchlist}
+              currentUser={currentUser}
               index={index}
             />
           ))}
+          
+          {/* Load More Trigger */}
+          {onLoadMore && (
+            <motion.div
+              className="flex-shrink-0 w-48 h-72 flex items-center justify-center bg-gray-800/50 rounded-lg cursor-pointer"
+              onClick={onLoadMore}
+              whileHover={{ scale: 1.05 }}
+            >
+              <div className="text-center">
+                <Plus size={32} className="text-gray-400 mx-auto mb-2" />
+                <p className="text-gray-400 text-sm">Load More</p>
+              </div>
+            </motion.div>
+          )}
         </div>
 
         {/* Scroll Right Button */}
-        <motion.button
-          onClick={() => scroll('right')}
-          className="absolute right-2 top-1/2 transform -translate-y-1/2 z-10 w-12 h-12 bg-black/70 rounded-full flex items-center justify-center text-white opacity-0 group-hover:opacity-100 transition-opacity"
-          whileHover={{ scale: 1.1 }}
-          whileTap={{ scale: 0.9 }}
-        >
-          <ChevronRight size={24} />
-        </motion.button>
+        <AnimatePresence>
+          {showRightButton && (
+            <motion.button
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => scroll('right')}
+              className="absolute right-2 top-1/2 transform -translate-y-1/2 z-10 w-12 h-12 bg-black/70 rounded-full flex items-center justify-center text-white hover:bg-black/90 transition-colors"
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.9 }}
+            >
+              <ChevronRight size={24} />
+            </motion.button>
+          )}
+        </AnimatePresence>
       </div>
     </div>
   );
 };
 
-// Content Card Component
-export const ContentCard = ({ item, onItemClick, onPlayTrailer, index }) => {
+// Enhanced Content Card with watchlist functionality
+export const ContentCard = ({ 
+  item, 
+  onItemClick, 
+  onPlayTrailer, 
+  onToggleWatchlist, 
+  currentUser, 
+  index 
+}) => {
   const [isHovered, setIsHovered] = useState(false);
+  const [isInWatchlist, setIsInWatchlist] = useState(false);
+
+  useEffect(() => {
+    if (currentUser && item) {
+      setIsInWatchlist(
+        watchlistService.isInWatchlist(
+          currentUser.id, 
+          item.id, 
+          item.media_type
+        )
+      );
+    }
+  }, [currentUser, item]);
+
+  const handleToggleWatchlist = (e) => {
+    e.stopPropagation();
+    onToggleWatchlist(item);
+    setIsInWatchlist(!isInWatchlist);
+  };
 
   return (
     <motion.div
@@ -418,7 +580,19 @@ export const ContentCard = ({ item, onItemClick, onPlayTrailer, index }) => {
           src={item.poster_path}
           alt={item.title || item.name}
           className="w-full h-72 object-cover rounded-lg"
+          loading="lazy"
         />
+        
+        {/* Watchlist indicator */}
+        {isInWatchlist && (
+          <motion.div
+            initial={{ scale: 0 }}
+            animate={{ scale: 1 }}
+            className="absolute top-2 right-2 w-6 h-6 bg-green-500 rounded-full flex items-center justify-center"
+          >
+            <Check size={14} className="text-white" />
+          </motion.div>
+        )}
         
         <AnimatePresence>
           {isHovered && (
@@ -428,47 +602,58 @@ export const ContentCard = ({ item, onItemClick, onPlayTrailer, index }) => {
               exit={{ opacity: 0 }}
               className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent rounded-lg flex flex-col justify-end p-4"
             >
-              <h3 className="text-white font-semibold text-sm mb-2">
+              <h3 className="text-white font-semibold text-sm mb-2 line-clamp-2">
                 {item.title || item.name}
               </h3>
               
-              <div className="flex items-center space-x-2 mb-3">
-                <motion.button
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    onPlayTrailer(item);
-                  }}
-                  className="w-8 h-8 bg-white rounded-full flex items-center justify-center hover:bg-gray-200 transition-colors"
-                  whileHover={{ scale: 1.1 }}
-                  whileTap={{ scale: 0.9 }}
-                >
-                  <Play size={14} fill="currentColor" className="text-black ml-0.5" />
-                </motion.button>
+              <div className="flex items-center justify-between mb-3">
+                <div className="flex items-center space-x-1">
+                  <motion.button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      onPlayTrailer(item);
+                    }}
+                    className="w-8 h-8 bg-white rounded-full flex items-center justify-center hover:bg-gray-200 transition-colors"
+                    whileHover={{ scale: 1.1 }}
+                    whileTap={{ scale: 0.9 }}
+                  >
+                    <Play size={14} fill="currentColor" className="text-black ml-0.5" />
+                  </motion.button>
+                  
+                  <motion.button
+                    onClick={handleToggleWatchlist}
+                    className={`w-8 h-8 border-2 rounded-full flex items-center justify-center transition-colors ${
+                      isInWatchlist 
+                        ? 'border-green-500 bg-green-500' 
+                        : 'border-gray-400 hover:border-white'
+                    }`}
+                    whileHover={{ scale: 1.1 }}
+                    whileTap={{ scale: 0.9 }}
+                  >
+                    {isInWatchlist ? <Check size={14} className="text-white" /> : <Plus size={14} className="text-white" />}
+                  </motion.button>
+                  
+                  <motion.button
+                    className="w-8 h-8 border-2 border-gray-400 rounded-full flex items-center justify-center hover:border-white transition-colors"
+                    whileHover={{ scale: 1.1 }}
+                    whileTap={{ scale: 0.9 }}
+                  >
+                    <ThumbsUp size={12} className="text-white" />
+                  </motion.button>
+                </div>
                 
-                <motion.button
-                  className="w-8 h-8 border-2 border-gray-400 rounded-full flex items-center justify-center hover:border-white transition-colors"
-                  whileHover={{ scale: 1.1 }}
-                  whileTap={{ scale: 0.9 }}
-                >
-                  <Plus size={14} className="text-white" />
-                </motion.button>
-                
-                <motion.button
-                  className="w-8 h-8 border-2 border-gray-400 rounded-full flex items-center justify-center hover:border-white transition-colors"
-                  whileHover={{ scale: 1.1 }}
-                  whileTap={{ scale: 0.9 }}
-                >
-                  <ThumbsUp size={12} className="text-white" />
-                </motion.button>
+                <div className="px-2 py-1 bg-gray-800/70 rounded text-xs font-semibold text-white">
+                  {item.media_type === 'movie' ? 'MOVIE' : 'TV'}
+                </div>
               </div>
               
               <div className="flex items-center space-x-2 text-xs text-gray-300">
                 <div className="flex items-center space-x-1">
                   <Star size={12} className="text-yellow-400" fill="currentColor" />
-                  <span>{item.vote_average}</span>
+                  <span>{item.vote_average?.toFixed(1)}</span>
                 </div>
                 <span>•</span>
-                <span>{item.release_date?.split('-')[0] || item.first_air_date?.split('-')[0]}</span>
+                <span>{new Date(item.release_date || item.first_air_date).getFullYear()}</span>
               </div>
             </motion.div>
           )}
@@ -478,233 +663,123 @@ export const ContentCard = ({ item, onItemClick, onPlayTrailer, index }) => {
   );
 };
 
-// Modal Component
-export const Modal = ({ isOpen, onClose, content, onPlayTrailer }) => {
-  if (!isOpen || !content) return null;
+// My List Component
+export const MyListSection = ({ currentUser, onItemClick, onPlayTrailer, onToggleWatchlist }) => {
+  const [watchlist, setWatchlist] = useState([]);
+  const [stats, setStats] = useState({});
+
+  useEffect(() => {
+    if (currentUser) {
+      const userWatchlist = watchlistService.getUserWatchlist(currentUser.id);
+      const userStats = watchlistService.getWatchlistStats(currentUser.id);
+      setWatchlist(userWatchlist);
+      setStats(userStats);
+    }
+  }, [currentUser]);
+
+  const handleToggleWatchlist = (item) => {
+    onToggleWatchlist(item);
+    // Refresh watchlist
+    const updatedWatchlist = watchlistService.getUserWatchlist(currentUser.id);
+    const updatedStats = watchlistService.getWatchlistStats(currentUser.id);
+    setWatchlist(updatedWatchlist);
+    setStats(updatedStats);
+  };
 
   return (
-    <AnimatePresence>
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        exit={{ opacity: 0 }}
-        className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm"
-        onClick={onClose}
-      >
-        <motion.div
-          initial={{ scale: 0.8, opacity: 0 }}
-          animate={{ scale: 1, opacity: 1 }}
-          exit={{ scale: 0.8, opacity: 0 }}
-          transition={{ type: "spring", damping: 25, stiffness: 300 }}
-          className="bg-gray-900 rounded-lg max-w-4xl w-full mx-4 max-h-[90vh] overflow-y-auto"
-          onClick={(e) => e.stopPropagation()}
-        >
-          {/* Header */}
-          <div className="relative">
-            <img
-              src={content.backdrop_path}
-              alt={content.title || content.name}
-              className="w-full h-64 object-cover rounded-t-lg"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-gray-900 via-transparent to-transparent rounded-t-lg" />
-            
-            <motion.button
-              onClick={onClose}
-              className="absolute top-4 right-4 w-10 h-10 bg-black/50 rounded-full flex items-center justify-center text-white hover:bg-black/70 transition-colors"
-              whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.9 }}
-            >
-              <X size={20} />
-            </motion.button>
-
-            <div className="absolute bottom-4 left-6">
-              <h2 className="text-3xl font-bold text-white mb-2">
-                {content.title || content.name}
-              </h2>
-              <div className="flex items-center space-x-4">
-                <motion.button
-                  onClick={() => onPlayTrailer(content)}
-                  className="flex items-center space-x-2 bg-white hover:bg-gray-200 text-black px-6 py-2 rounded-lg font-semibold transition-colors"
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                >
-                  <Play size={16} fill="currentColor" />
-                  <span>Play Trailer</span>
-                </motion.button>
-                
-                <motion.button
-                  className="w-10 h-10 border-2 border-gray-400 rounded-full flex items-center justify-center hover:border-white transition-colors"
-                  whileHover={{ scale: 1.1 }}
-                  whileTap={{ scale: 0.9 }}
-                >
-                  <Plus size={20} className="text-white" />
-                </motion.button>
-                
-                <motion.button
-                  className="w-10 h-10 border-2 border-gray-400 rounded-full flex items-center justify-center hover:border-white transition-colors"
-                  whileHover={{ scale: 1.1 }}
-                  whileTap={{ scale: 0.9 }}
-                >
-                  <ThumbsUp size={16} className="text-white" />
-                </motion.button>
-                
-                <motion.button
-                  className="w-10 h-10 border-2 border-gray-400 rounded-full flex items-center justify-center hover:border-white transition-colors"
-                  whileHover={{ scale: 1.1 }}
-                  whileTap={{ scale: 0.9 }}
-                >
-                  <Share2 size={16} className="text-white" />
-                </motion.button>
-              </div>
-            </div>
-          </div>
-
-          {/* Content */}
-          <div className="p-6">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              <div className="md:col-span-2">
-                <div className="flex items-center space-x-4 mb-4">
-                  <div className="flex items-center space-x-1">
-                    <Star size={16} className="text-yellow-400" fill="currentColor" />
-                    <span className="text-white font-semibold">{content.vote_average}</span>
-                  </div>
-                  <span className="text-gray-400">
-                    {content.release_date?.split('-')[0] || content.first_air_date?.split('-')[0]}
-                  </span>
-                  <span className="text-gray-400">
-                    {content.runtime ? `${content.runtime} min` : `${content.number_of_seasons} Seasons`}
-                  </span>
-                </div>
-                
-                <p className="text-gray-300 leading-relaxed mb-4">
-                  {content.overview}
-                </p>
-              </div>
-              
-              <div className="space-y-4">
-                <div>
-                  <h4 className="text-white font-semibold mb-2">Genres</h4>
-                  <div className="flex flex-wrap gap-2">
-                    {content.genres?.map((genre, index) => (
-                      <span key={index} className="px-3 py-1 bg-gray-700 text-gray-300 text-sm rounded-full">
-                        {genre}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </motion.div>
-      </motion.div>
-    </AnimatePresence>
-  );
-};
-
-// YouTube Player Component
-export const YouTubePlayer = ({ isOpen, onClose, videoKey, title }) => {
-  if (!isOpen || !videoKey) return null;
-
-  return (
-    <AnimatePresence>
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        exit={{ opacity: 0 }}
-        className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 backdrop-blur-sm"
-        onClick={onClose}
-      >
-        <motion.div
-          initial={{ scale: 0.8, opacity: 0 }}
-          animate={{ scale: 1, opacity: 1 }}
-          exit={{ scale: 0.8, opacity: 0 }}
-          transition={{ type: "spring", damping: 25, stiffness: 300 }}
-          className="relative max-w-6xl w-full mx-4 aspect-video"
-          onClick={(e) => e.stopPropagation()}
-        >
-          <motion.button
-            onClick={onClose}
-            className="absolute -top-12 right-0 w-10 h-10 bg-black/50 rounded-full flex items-center justify-center text-white hover:bg-black/70 transition-colors z-10"
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.9 }}
-          >
-            <X size={20} />
-          </motion.button>
-
-          <iframe
-            src={`https://www.youtube.com/embed/${videoKey}?autoplay=1&rel=0&modestbranding=1`}
-            title={title}
-            className="w-full h-full rounded-lg"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowFullScreen
-          />
-        </motion.div>
-      </motion.div>
-    </AnimatePresence>
-  );
-};
-
-// Footer Component
-export const Footer = () => {
-  return (
-    <footer className="bg-black text-gray-400 py-12">
+    <div className="min-h-screen bg-black pt-32 pb-16">
       <div className="container mx-auto px-4">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-          <div>
-            <div className="text-xl font-bold bg-gradient-to-r from-red-500 via-purple-500 to-blue-500 bg-clip-text text-transparent mb-4">
-              Quantum Media Hub
+        {/* Header */}
+        <motion.div
+          className="mb-8"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+        >
+          <h1 className="text-4xl font-bold text-white mb-4">My List</h1>
+          <div className="flex items-center space-x-6 text-gray-300">
+            <div className="flex items-center space-x-2">
+              <Bookmark size={16} />
+              <span>{stats.total} items</span>
             </div>
-            <div className="text-sm text-purple-400 font-semibold mb-4">
-              (Throne Edition)
+            <div className="flex items-center space-x-2">
+              <Film size={16} />
+              <span>{stats.movies} movies</span>
             </div>
-            <p className="text-sm">
-              Experience the future of streaming with quantum-powered entertainment.
+            <div className="flex items-center space-x-2">
+              <Tv size={16} />
+              <span>{stats.tvShows} TV shows</span>
+            </div>
+          </div>
+        </motion.div>
+
+        {/* Content */}
+        {watchlist.length > 0 ? (
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
+            {watchlist.map((item, index) => (
+              <ContentCard
+                key={`${item.id}-${item.media_type}`}
+                item={item}
+                onItemClick={onItemClick}
+                onPlayTrailer={onPlayTrailer}
+                onToggleWatchlist={handleToggleWatchlist}
+                currentUser={currentUser}
+                index={index}
+              />
+            ))}
+          </div>
+        ) : (
+          <motion.div
+            className="text-center py-16"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+          >
+            <Bookmark size={64} className="text-gray-600 mx-auto mb-4" />
+            <h2 className="text-2xl font-bold text-gray-400 mb-2">Your list is empty</h2>
+            <p className="text-gray-500">
+              Add movies and TV shows to your list to watch them later.
             </p>
-          </div>
-          
-          <div>
-            <h4 className="text-white font-semibold mb-4">Browse</h4>
-            <ul className="space-y-2 text-sm">
-              <li><a href="#" className="hover:text-white transition-colors">Home</a></li>
-              <li><a href="#" className="hover:text-white transition-colors">Movies</a></li>
-              <li><a href="#" className="hover:text-white transition-colors">TV Shows</a></li>
-              <li><a href="#" className="hover:text-white transition-colors">My List</a></li>
-            </ul>
-          </div>
-          
-          <div>
-            <h4 className="text-white font-semibold mb-4">Help</h4>
-            <ul className="space-y-2 text-sm">
-              <li><a href="#" className="hover:text-white transition-colors">FAQ</a></li>
-              <li><a href="#" className="hover:text-white transition-colors">Contact Us</a></li>
-              <li><a href="#" className="hover:text-white transition-colors">Privacy Policy</a></li>
-              <li><a href="#" className="hover:text-white transition-colors">Terms of Service</a></li>
-            </ul>
-          </div>
-          
-          <div>
-            <h4 className="text-white font-semibold mb-4">Connect</h4>
-            <ul className="space-y-2 text-sm">
-              <li><a href="#" className="hover:text-white transition-colors">Social Media</a></li>
-              <li><a href="#" className="hover:text-white transition-colors">Newsletter</a></li>
-              <li><a href="#" className="hover:text-white transition-colors">Blog</a></li>
-              <li><a href="#" className="hover:text-white transition-colors">Careers</a></li>
-            </ul>
-          </div>
-        </div>
-        
-        <div className="border-t border-gray-800 mt-8 pt-8 text-center">
-          <p className="text-sm text-gray-500 mb-2">
-            © 2024 Quantum Media Hub (Throne Edition). All rights reserved.
-          </p>
-          <p className="text-xs text-purple-400 font-semibold">
-            ✨POWERED BY TRILLIONS✨
-          </p>
-        </div>
+          </motion.div>
+        )}
       </div>
-    </footer>
+    </div>
   );
 };
 
-// Export mock data
-export { mockMovies, mockTVShows };
+// Loading Component
+export const LoadingSpinner = ({ size = 'medium' }) => {
+  const sizeClasses = {
+    small: 'w-4 h-4',
+    medium: 'w-8 h-8',
+    large: 'w-12 h-12'
+  };
+
+  return (
+    <div className={`${sizeClasses[size]} border-2 border-purple-500 border-t-transparent rounded-full animate-spin`}></div>
+  );
+};
+
+// Error Component
+export const ErrorMessage = ({ error, onRetry }) => (
+  <motion.div
+    className="text-center py-16"
+    initial={{ opacity: 0 }}
+    animate={{ opacity: 1 }}
+  >
+    <div className="text-red-500 text-6xl mb-4">⚠️</div>
+    <h2 className="text-2xl font-bold text-white mb-2">Something went wrong</h2>
+    <p className="text-gray-400 mb-4">{error}</p>
+    {onRetry && (
+      <motion.button
+        onClick={onRetry}
+        className="bg-purple-600 hover:bg-purple-700 text-white px-6 py-2 rounded-lg transition-colors"
+        whileHover={{ scale: 1.05 }}
+        whileTap={{ scale: 0.95 }}
+      >
+        Try Again
+      </motion.button>
+    )}
+  </motion.div>
+);
+
+// Continue previous components...
+export * from './components-extended';
