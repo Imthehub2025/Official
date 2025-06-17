@@ -44,7 +44,8 @@ export const Header = ({
   currentUser,
   onUserChange,
   showUserMenu,
-  setShowUserMenu
+  setShowUserMenu,
+  onOpenDeviceIntegration
 }) => {
   const [scrolled, setScrolled] = useState(false);
   const allUsers = userService.getAllUsers();
