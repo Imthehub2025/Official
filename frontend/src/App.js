@@ -522,6 +522,7 @@ function App() {
         onUserChange={handleUserChange}
         showUserMenu={showUserMenu}
         setShowUserMenu={setShowUserMenu}
+        onOpenDeviceIntegration={handleOpenDeviceIntegration}
       />
 
       {/* Main Content */}
