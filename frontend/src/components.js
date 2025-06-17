@@ -61,6 +61,7 @@ export const Header = ({
     { id: 'home', label: 'Home', icon: Home },
     { id: 'movies', label: 'Movies', icon: Film },
     { id: 'tv-shows', label: 'TV Shows', icon: Tv },
+    { id: 'library', label: 'Library', icon: Bookmark },
     { id: 'my-list', label: 'My List', icon: Bookmark }
   ];
 
