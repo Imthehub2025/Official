@@ -16,6 +16,9 @@ import {
   MoviesSection,
   TVShowsSection
 } from './components-extended';
+import { LibrarySection } from './components/LibraryComponents';
+import { VideoPlayer } from './components/VideoPlayer';
+import { EnhancedSearch } from './components/EnhancedSearch';
 import { useContent } from './hooks/useContent';
 import { userService, watchlistService } from './services/userService';
 import { getTrailerKey } from './services/tmdbApi';
