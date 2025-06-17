@@ -3,15 +3,15 @@ import './App.css';
 import { 
   Header, 
   HeroBanner, 
-  ContentRow, 
-  Modal, 
-  YouTubePlayer, 
-  Footer,
+  ContentRow,
   MyListSection,
   LoadingSpinner,
   ErrorMessage
 } from './components';
 import { 
+  Modal,
+  YouTubePlayer,
+  Footer,
   SearchResults,
   MoviesSection,
   TVShowsSection
