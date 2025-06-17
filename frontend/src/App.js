@@ -283,14 +283,6 @@ function App() {
           />
         );
 
-        return (
-          <LibrarySection
-            currentUser={currentUser}
-            onPlayVideo={handlePlayVideo}
-          />
-        );
-
-      case 'library':
       case 'library':
         return (
           <LibrarySection
