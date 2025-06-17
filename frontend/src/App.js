@@ -122,6 +122,26 @@ function App() {
     }
   }, [currentSection]);
 
+  // Device integration handlers
+  const handleOpenDeviceIntegration = useCallback(() => {
+    setShowDeviceIntegration(true);
+  }, []);
+
+  const handleCloseDeviceIntegration = useCallback(() => {
+    setShowDeviceIntegration(false);
+  }, []);
+
+  // XR Player handlers
+  const handlePlayXR = useCallback((content) => {
+    setVideoPlayerContent(content);
+    setShowXRPlayer(true);
+  }, []);
+
+  const handleCloseXRPlayer = useCallback(() => {
+    setShowXRPlayer(false);
+    setVideoPlayerContent(null);
+  }, []);
+
   // Content interaction handlers
   const handleItemClick = useCallback(async (content) => {
     try {
