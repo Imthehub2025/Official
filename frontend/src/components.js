@@ -173,7 +173,7 @@ export const Header = ({
             whileTap={{ scale: 0.9 }}
             title="Device Integration - XR, Bluetooth, Screen Mirroring"
           >
-            <Settings size={20} />
+            <Glasses size={20} />
           </motion.button>
 
           {/* User Profile Menu */}
