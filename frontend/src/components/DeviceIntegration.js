@@ -25,7 +25,7 @@ import {
   Hand,
   Mic,
   Radio,
-  Screen,
+  ScreenShare,
   Airplay
 } from 'lucide-react';
 import { 
