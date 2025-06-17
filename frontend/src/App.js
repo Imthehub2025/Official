@@ -200,6 +200,7 @@ function App() {
     if (section !== 'search') {
       setSearchQuery('');
       setShowSearch(false);
+      setShowEnhancedSearch(false);
       clearSearch();
     }
   }, [clearSearch]);
