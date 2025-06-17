@@ -576,11 +576,18 @@ function App() {
         onToggleWatchlist={handleToggleWatchlist}
       />
 
-      {/* Video Player */}
-      <VideoPlayer
-        isOpen={showVideoPlayer}
-        onClose={handleCloseVideoPlayer}
+      {/* XR Video Player */}
+      <XRVideoPlayer
+        isOpen={showXRPlayer}
+        onClose={handleCloseXRPlayer}
         content={videoPlayerContent}
+      />
+
+      {/* Device Integration */}
+      <DeviceIntegration
+        isOpen={showDeviceIntegration}
+        onClose={handleCloseDeviceIntegration}
+        currentVideo={videoPlayerContent}
       />
 
       {/* Auto-Update Indicator */}
