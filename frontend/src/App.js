@@ -86,25 +86,30 @@ function App() {
     return () => clearTimeout(timeoutId);
   }, [searchQuery]);
 
-  // Handle search
-  const handleSearch = useCallback(async (query, page = 1) => {
-    setIsSearching(true);
-    try {
-      await searchContent(query, page);
-      setSearchPage(page);
-    } catch (err) {
-      console.error('Search error:', err);
-    } finally {
-      setIsSearching(false);
-    }
-  }, [searchContent]);
+  // Video player handlers
+  const handlePlayVideo = useCallback((content) => {
+    setVideoPlayerContent(content);
+    setShowVideoPlayer(true);
+  }, []);
 
-  // Load more search results
-  const handleLoadMoreSearch = useCallback(() => {
-    if (searchQuery.trim()) {
-      handleSearch(searchQuery, searchPage + 1);
+  const handleCloseVideoPlayer = useCallback(() => {
+    setShowVideoPlayer(false);
+    setVideoPlayerContent(null);
+  }, []);
+
+  // Enhanced search handlers
+  const handleOpenEnhancedSearch = useCallback(() => {
+    setShowEnhancedSearch(true);
+    setShowSearch(false);
+  }, []);
+
+  const handleCloseEnhancedSearch = useCallback(() => {
+    setShowEnhancedSearch(false);
+    setSearchQuery('');
+    if (currentSection === 'search') {
+      setCurrentSection('home');
     }
-  }, [searchQuery, searchPage, handleSearch]);
+  }, [currentSection]);
 
   // Content interaction handlers
   const handleItemClick = useCallback(async (content) => {
