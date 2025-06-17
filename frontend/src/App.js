@@ -69,11 +69,11 @@ function App() {
     userService.init();
   }, []);
 
-  // Auto-search functionality
+  // Auto-search functionality with enhanced search
   useEffect(() => {
     const timeoutId = setTimeout(() => {
       if (searchQuery.trim()) {
-        handleSearch(searchQuery, 1);
+        setShowEnhancedSearch(true);
         setCurrentSection('search');
       } else {
         clearSearch();
