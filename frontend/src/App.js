@@ -18,7 +18,9 @@ import {
 } from './components-extended';
 import { LibrarySection } from './components/LibraryComponents';
 import { VideoPlayer } from './components/VideoPlayer';
+import { XRVideoPlayer } from './components/XRVideoPlayer';
 import { EnhancedSearch } from './components/EnhancedSearch';
+import { DeviceIntegration } from './components/DeviceIntegration';
 import { useContent } from './hooks/useContent';
 import { userService, watchlistService } from './services/userService';
 import { getTrailerKey } from './services/tmdbApi';
