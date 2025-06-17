@@ -290,6 +290,7 @@ function App() {
           />
         );
 
+      case 'library':
         return (
           <LibrarySection
             currentUser={currentUser}
