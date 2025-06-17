@@ -51,8 +51,13 @@ function App() {
   const [trailerContent, setTrailerContent] = useState(null);
   const [searchQuery, setSearchQuery] = useState('');
   const [showSearch, setShowSearch] = useState(false);
+  const [showEnhancedSearch, setShowEnhancedSearch] = useState(false);
   const [currentSection, setCurrentSection] = useState('home');
   const [showUserMenu, setShowUserMenu] = useState(false);
+  
+  // Video player state
+  const [showVideoPlayer, setShowVideoPlayer] = useState(false);
+  const [videoPlayerContent, setVideoPlayerContent] = useState(null);
   
   // User state
   const [currentUser, setCurrentUser] = useState(userService.getCurrentUser());
