@@ -19,6 +19,7 @@ import {
 } from 'lucide-react';
 import { watchlistService } from './services/userService';
 import { getTrailerKey } from './services/tmdbApi';
+import { ContentRow, ContentCard } from './components';
 
 // Enhanced Modal Component with detailed information
 export const Modal = ({ isOpen, onClose, content, onPlayTrailer, currentUser, onToggleWatchlist }) => {
