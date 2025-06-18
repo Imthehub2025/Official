@@ -71,6 +71,13 @@ function App() {
   const [searchPage, setSearchPage] = useState(1);
   const [isSearching, setIsSearching] = useState(false);
 
+  // Sovereignty and AI state
+  const [sovereigntyMode, setSovereigntyMode] = useState(false);
+  const [showSovereigntySettings, setShowSovereigntySettings] = useState(false);
+  const [showVoiceCommand, setShowVoiceCommand] = useState(false);
+  const [showAIRecommendations, setShowAIRecommendations] = useState(false);
+  const [aiModerationEnabled, setAiModerationEnabled] = useState(true);
+
   // Initialize user service
   useEffect(() => {
     userService.init();
