@@ -55,7 +55,7 @@ class AdvancedAnalyticsService:
     async def _update_user_analytics(self, session: ViewingSession):
         """Update user-specific analytics"""
         try:
-            if self.db is not None:
+            if self.db is None:
                 return
             
             user_id = session.user_id
