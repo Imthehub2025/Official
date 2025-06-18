@@ -442,7 +442,7 @@ class SocialService:
         try:
             # Get content information
             content = None
-            if self.db:
+            if self.db is not None:
                 content = await self.db.content.find_one({"id": content_id})
             
             if not content:
