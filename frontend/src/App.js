@@ -422,6 +422,17 @@ function App() {
           />
         );
 
+      case 'ai-recommendations':
+        return (
+          <AIRecommendations
+            currentUser={currentUser}
+            onItemClick={handleItemClick}
+            onPlayTrailer={handlePlayTrailer}
+            onToggleWatchlist={handleToggleWatchlist}
+            className="px-4 lg:px-8 py-8"
+          />
+        );
+
       case 'home':
       default:
         // Combine all content for genre-based rows
