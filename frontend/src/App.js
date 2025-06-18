@@ -612,9 +612,9 @@ function App() {
         onOpenDeviceIntegration={handleOpenDeviceIntegration}
       />
 
-      {/* Sovereignty Mode Toggle - Fixed Position */}
-      <div className="fixed top-20 right-4 z-30">
-        <SovereigntyModeToggle
+      {/* Enhanced Sovereignty Mode Toggle - Fixed Position */}
+      <div className="fixed top-20 right-4 z-30 max-w-sm">
+        <EnhancedSovereigntyToggle
           currentUser={currentUser}
           onToggle={handleSovereigntyToggle}
           onOpenSettings={handleOpenSovereigntySettings}
