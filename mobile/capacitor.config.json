@@ -1,0 +1,148 @@
+{
+  "appId": "com.quantum.mediahub",
+  "appName": "Quantum Media Hub",
+  "webDir": "../frontend/build",
+  "bundledWebRuntime": false,
+  "server": {
+    "androidScheme": "https",
+    "iosScheme": "https"
+  },
+  "plugins": {
+    "SplashScreen": {
+      "launchShowDuration": 3000,
+      "launchAutoHide": true,
+      "backgroundColor": "#1a1a2e",
+      "androidSplashResourceName": "splash",
+      "androidScaleType": "CENTER_CROP",
+      "showSpinner": true,
+      "androidSpinnerStyle": "large",
+      "iosSpinnerStyle": "small",
+      "spinnerColor": "#667eea",
+      "splashFullScreen": true,
+      "splashImmersive": true
+    },
+    "StatusBar": {
+      "style": "DARK",
+      "backgroundColor": "#1a1a2e"
+    },
+    "Keyboard": {
+      "resize": "body",
+      "style": "dark",
+      "resizeOnFullScreen": true
+    },
+    "Device": {
+      "getInfo": true
+    },
+    "App": {
+      "launchUrl": "quantummedia://app"
+    },
+    "Haptics": {},
+    "LocalNotifications": {
+      "smallIcon": "ic_stat_icon_config_sample",
+      "iconColor": "#667eea",
+      "sound": "quantum_notification.wav"
+    },
+    "PushNotifications": {
+      "presentationOptions": ["badge", "sound", "alert"]
+    },
+    "Geolocation": {
+      "permissions": {
+        "location": "To enable location-based content recommendations"
+      }
+    },
+    "Camera": {
+      "permissions": {
+        "camera": "To scan QR codes for device pairing"
+      }
+    },
+    "Microphone": {
+      "permissions": {
+        "microphone": "To enable voice commands and control"
+      }
+    },
+    "Storage": {
+      "permissions": {
+        "storage": "To store downloaded content and user preferences"
+      }
+    }
+  },
+  "cordova": {
+    "preferences": {
+      "ScrollEnabled": "false",
+      "BackupWebStorage": "none",
+      "SplashMaintainAspectRatio": "true",
+      "FadeSplashScreenDuration": "300",
+      "SplashShowOnlyFirstTime": "false",
+      "SplashScreen": "screen",
+      "SplashScreenDelay": "3000",
+      "AutoHideSplashScreen": "false",
+      "orientation": "default",
+      "Fullscreen": "true"
+    },
+    "plugins": {
+      "cordova-plugin-whitelist": {},
+      "cordova-plugin-statusbar": {},
+      "cordova-plugin-device": {},
+      "cordova-plugin-splashscreen": {},
+      "cordova-plugin-ionic-webview": {},
+      "cordova-plugin-ionic-keyboard": {},
+      "cordova-plugin-media": {},
+      "cordova-plugin-file": {},
+      "cordova-plugin-file-transfer": {},
+      "cordova-plugin-network-information": {},
+      "cordova-plugin-vibration": {},
+      "cordova-plugin-screen-orientation": {},
+      "cordova-plugin-fullscreen": {}
+    }
+  },
+  "android": {
+    "minSdkVersion": 24,
+    "targetSdkVersion": 34,
+    "compileSdkVersion": 34,
+    "buildToolsVersion": "34.0.0",
+    "versionCode": 20000,
+    "versionName": "2.0.0",
+    "packageName": "com.quantum.mediahub",
+    "allowMixedContent": true,
+    "useLegacySwiftLanguageVersion": false,
+    "webContentsDebuggingEnabled": true,
+    "permissions": [
+      "android.permission.INTERNET",
+      "android.permission.ACCESS_NETWORK_STATE",
+      "android.permission.ACCESS_WIFI_STATE",
+      "android.permission.BLUETOOTH",
+      "android.permission.BLUETOOTH_ADMIN",
+      "android.permission.BLUETOOTH_CONNECT",
+      "android.permission.CAMERA",
+      "android.permission.RECORD_AUDIO",
+      "android.permission.MODIFY_AUDIO_SETTINGS",
+      "android.permission.WRITE_EXTERNAL_STORAGE",
+      "android.permission.READ_EXTERNAL_STORAGE",
+      "android.permission.ACCESS_FINE_LOCATION",
+      "android.permission.ACCESS_COARSE_LOCATION",
+      "android.permission.VIBRATE",
+      "android.permission.WAKE_LOCK",
+      "android.permission.FOREGROUND_SERVICE",
+      "android.permission.SYSTEM_ALERT_WINDOW"
+    ]
+  },
+  "ios": {
+    "minVersion": "13.0",
+    "bundleId": "com.quantum.mediahub",
+    "buildNumber": "2.0.0",
+    "version": "2.0.0",
+    "allowsArbitraryLoads": true,
+    "limitsNavigationsToAppBoundDomains": false,
+    "scheme": "quantummedia",
+    "cordovaSwiftVersion": "5.0",
+    "permissions": [
+      "NSCameraUsageDescription",
+      "NSMicrophoneUsageDescription",
+      "NSLocationWhenInUseUsageDescription",
+      "NSBluetoothAlwaysUsageDescription",
+      "NSBluetoothPeripheralUsageDescription",
+      "NSPhotoLibraryUsageDescription",
+      "NSUserNotificationUsageDescription"
+    ]
+  }
+}
