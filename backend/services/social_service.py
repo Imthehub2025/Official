@@ -457,7 +457,7 @@ class SocialService:
                 "timestamp": datetime.utcnow()
             }
             
-            if self.db:
+            if self.db is not None:
                 await self.db.content_shares.insert_one(share_record)
             
             # Generate share URL/content based on platform
