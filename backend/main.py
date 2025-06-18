@@ -111,13 +111,32 @@ api_router = APIRouter(prefix="/api")
 async def enable_sovereignty_mode(
     user_id: str,
     settings: SovereigntySettings,
+    openai_api_key: Optional[str] = None,
     sovereignty_service: SovereigntyService = Depends(get_service("sovereignty_service"))
 ):
-    """Enable sovereignty mode for user"""
-    success = await sovereignty_service.enable_sovereignty_mode(user_id, settings)
-    if success:
-        return {"status": "success", "message": "Sovereignty mode enabled"}
-    raise HTTPException(status_code=500, detail="Failed to enable sovereignty mode")
+    """Enable sovereignty mode for user with optional OpenAI API key"""
+    try:
+        # Store OpenAI API key if provided
+        if openai_api_key:
+            # Update environment variable for this session
+            os.environ['OPENAI_API_KEY'] = openai_api_key
+            
+            # Reinitialize AI service with new key
+            if 'ai_service' in services:
+                from .services.ai_service import AIService
+                services['ai_service'] = AIService(openai_api_key, services['db'])
+        
+        success = await sovereignty_service.enable_sovereignty_mode(user_id, settings)
+        if success:
+            return {
+                "status": "success", 
+                "message": "Sovereignty mode enabled",
+                "ai_enabled": bool(openai_api_key),
+                "features_unlocked": 4 if openai_api_key else 2
+            }
+        raise HTTPException(status_code=500, detail="Failed to enable sovereignty mode")
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Error enabling sovereignty mode: {str(e)}")
 
 @api_router.post("/sovereignty/disable")
 async def disable_sovereignty_mode(
