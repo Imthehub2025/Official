@@ -211,7 +211,7 @@ class SocialService:
             party.participants.append(user_id)
             
             # Update in database
-            if self.db:
+            if self.db is not None:
                 await self.db.watch_parties.update_one(
                     {"id": party_id},
                     {"$addToSet": {"participants": user_id}}
