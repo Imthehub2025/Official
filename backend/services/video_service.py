@@ -551,7 +551,7 @@ class InteractiveContentService:
     
     async def _get_interactive_config(self, content_id: str) -> Dict:
         """Get interactive content configuration from database"""
-        if self.db:
+        if self.db is not None:
             try:
                 config = await self.db.interactive_content.find_one({"content_id": content_id})
                 return config or {"branches": {}, "choices": [], "default_path": "end"}
