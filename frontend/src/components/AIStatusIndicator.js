@@ -186,7 +186,7 @@ const AIStatusIndicator = ({
               <div className="text-gray-400 text-xs">Accuracy</div>
             </div>
             <div>
-              <div className="text-blue-400 font-semibold text-sm">< 1s</div>
+              <div className="text-blue-400 font-semibold text-sm">{'< 1s'}</div>
               <div className="text-gray-400 text-xs">Response</div>
             </div>
             <div>
