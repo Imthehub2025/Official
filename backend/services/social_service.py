@@ -394,7 +394,7 @@ class SocialService:
                 party = party_data["party"]
                 
                 # Mark as ended in database
-                if self.db:
+                if self.db is not None:
                     await self.db.watch_parties.update_one(
                         {"id": party_id},
                         {
