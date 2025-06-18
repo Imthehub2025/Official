@@ -57,7 +57,7 @@ class SocialService:
                 review_text=review_text
             )
             
-            if self.db:
+            if self.db is not None:
                 await self.db.reviews.insert_one(review.dict())
             
             return review
