@@ -28,7 +28,7 @@ class AdvancedAnalyticsService:
         """Track a viewing session with comprehensive metrics"""
         try:
             # Store session in database
-            if self.db:
+            if self.db is not None:
                 await self.db.viewing_sessions.insert_one(session.dict())
             
             # Update real-time metrics
