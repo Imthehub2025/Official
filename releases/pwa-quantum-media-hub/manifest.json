@@ -1,0 +1,188 @@
+{
+  "name": "Quantum Media Hub - Ultimate Sovereign Streaming Platform",
+  "short_name": "Quantum Media Hub",
+  "description": "Revolutionary streaming platform with AI, sovereignty mode, and XR support",
+  "version": "2.0.0",
+  "start_url": "/",
+  "display": "standalone",
+  "orientation": "any",
+  "theme_color": "#667eea",
+  "background_color": "#1a1a2e",
+  "scope": "/",
+  "categories": ["entertainment", "multimedia", "productivity"],
+  "lang": "en-US",
+  "dir": "ltr",
+  "prefer_related_applications": false,
+  "icons": [
+    {
+      "src": "/icons/icon-72x72.png",
+      "sizes": "72x72",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icons/icon-96x96.png",
+      "sizes": "96x96",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icons/icon-128x128.png",
+      "sizes": "128x128",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icons/icon-144x144.png",
+      "sizes": "144x144",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icons/icon-152x152.png",
+      "sizes": "152x152",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icons/icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icons/icon-384x384.png",
+      "sizes": "384x384",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icons/icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "/screenshots/desktop-home.png",
+      "sizes": "1280x720",
+      "type": "image/png",
+      "platform": "wide",
+      "label": "Quantum Media Hub Home Screen"
+    },
+    {
+      "src": "/screenshots/mobile-sovereignty.png",
+      "sizes": "640x1136",
+      "type": "image/png",
+      "platform": "narrow",
+      "label": "Sovereignty Mode Toggle"
+    }
+  ],
+  "features": [
+    "Cross Platform",
+    "Background Sync",
+    "Web Share",
+    "Fullscreen",
+    "Install Prompt"
+  ],
+  "shortcuts": [
+    {
+      "name": "AI Recommendations",
+      "short_name": "AI Recs",
+      "description": "View AI-powered content recommendations",
+      "url": "/ai-recommendations",
+      "icons": [
+        {
+          "src": "/icons/shortcut-ai.png",
+          "sizes": "96x96"
+        }
+      ]
+    },
+    {
+      "name": "Sovereignty Mode",
+      "short_name": "Sovereignty",
+      "description": "Toggle sovereignty mode",
+      "url": "/sovereignty",
+      "icons": [
+        {
+          "src": "/icons/shortcut-sovereignty.png",
+          "sizes": "96x96"
+        }
+      ]
+    },
+    {
+      "name": "Voice Commands",
+      "short_name": "Voice",
+      "description": "Activate voice command interface",
+      "url": "/voice",
+      "icons": [
+        {
+          "src": "/icons/shortcut-voice.png",
+          "sizes": "96x96"
+        }
+      ]
+    },
+    {
+      "name": "XR Experience",
+      "short_name": "XR",
+      "description": "Launch XR/VR streaming experience",
+      "url": "/xr",
+      "icons": [
+        {
+          "src": "/icons/shortcut-xr.png",
+          "sizes": "96x96"
+        }
+      ]
+    }
+  ],
+  "protocol_handlers": [
+    {
+      "protocol": "web+quantummedia",
+      "url": "/handle-protocol?url=%s"
+    }
+  ],
+  "file_handlers": [
+    {
+      "action": "/upload",
+      "accept": {
+        "video/*": [".mp4", ".mkv", ".avi", ".mov", ".wmv", ".webm"],
+        "audio/*": [".mp3", ".aac", ".flac", ".wav", ".ogg"]
+      }
+    }
+  ],
+  "share_target": {
+    "action": "/share",
+    "method": "POST",
+    "enctype": "multipart/form-data",
+    "params": {
+      "title": "title",
+      "text": "text",
+      "url": "url",
+      "files": [
+        {
+          "name": "media",
+          "accept": ["video/*", "audio/*", "image/*"]
+        }
+      ]
+    }
+  },
+  "edge_side_panel": {
+    "preferred_width": 400
+  },
+  "handle_links": "preferred",
+  "launch_handler": {
+    "client_mode": "focus-existing"
+  },
+  "related_applications": [
+    {
+      "platform": "play",
+      "url": "https://play.google.com/store/apps/details?id=com.quantum.mediahub",
+      "id": "com.quantum.mediahub"
+    },
+    {
+      "platform": "itunes",
+      "url": "https://apps.apple.com/app/quantum-media-hub/id123456789"
+    }
+  ]
+}

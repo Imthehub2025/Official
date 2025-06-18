@@ -1,0 +1,112 @@
+version: '3.8'
+
+services:
+  # MongoDB Database
+  mongo:
+    image: mongo:6.0
+    container_name: quantum-media-mongo
+    restart: unless-stopped
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_DATABASE: quantum_media_hub
+    volumes:
+      - mongo_data:/data/db
+      - ./docker/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
+    networks:
+      - quantum-network
+
+  # Redis for Caching (Optional)
+  redis:
+    image: redis:7-alpine
+    container_name: quantum-media-redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - quantum-network
+
+  # Main Application
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: quantum-media-hub
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+      - "8001:8001"
+    environment:
+      - NODE_ENV=production
+      - MONGO_URL=mongodb://mongo:27017
+      - DB_NAME=quantum_media_hub
+      - REDIS_URL=redis://redis:6379
+      - OPENAI_API_KEY=${OPENAI_API_KEY:-}
+    volumes:
+      - ./sovereign_storage:/app/sovereign_storage
+      - ./uploads:/app/uploads
+      - ./logs:/var/log
+    depends_on:
+      - mongo
+      - redis
+    networks:
+      - quantum-network
+
+  # NGINX Load Balancer (for scaling)
+  nginx:
+    image: nginx:alpine
+    container_name: quantum-media-nginx
+    restart: unless-stopped
+    ports:
+      - "8080:80"
+    volumes:
+      - ./docker/nginx-lb.conf:/etc/nginx/nginx.conf:ro
+    depends_on:
+      - app
+    networks:
+      - quantum-network
+
+  # WebRTC Signaling Server (for watch parties)
+  webrtc-signaling:
+    build:
+      context: ./docker/webrtc
+      dockerfile: Dockerfile
+    container_name: quantum-media-webrtc
+    restart: unless-stopped
+    ports:
+      - "3001:3001"
+    networks:
+      - quantum-network
+
+  # TURN Server (for WebRTC NAT traversal)
+  coturn:
+    image: coturn/coturn:latest
+    container_name: quantum-media-turn
+    restart: unless-stopped
+    ports:
+      - "3478:3478/udp"
+      - "3478:3478/tcp"
+      - "49152-65535:49152-65535/udp"
+    environment:
+      - TURN_REALM=quantum-media-hub.local
+      - TURN_USER=quantum:quantum123
+    volumes:
+      - ./docker/turnserver.conf:/etc/coturn/turnserver.conf:ro
+    networks:
+      - quantum-network
+
+volumes:
+  mongo_data:
+    driver: local
+  redis_data:
+    driver: local
+
+networks:
+  quantum-network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.20.0.0/16
