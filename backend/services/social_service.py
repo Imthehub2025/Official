@@ -71,7 +71,7 @@ class SocialService:
                                 sort_by: str = "helpful") -> List[Dict]:
         """Get reviews for specific content"""
         try:
-            if not self.db:
+            if self.db is None:
                 return []
             
             # Determine sort criteria
