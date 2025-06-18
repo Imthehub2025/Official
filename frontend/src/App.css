@@ -1,8 +1,12 @@
 @import 'tailwindcss/base';
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
+@import './styles/sovereignty-animations.css';
 
 /* Custom Styles */
+
+.App {
+}
 * {
   margin: 0;
   padding: 0;
