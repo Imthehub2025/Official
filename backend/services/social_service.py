@@ -22,7 +22,7 @@ class SocialService:
         """Create a new content review"""
         try:
             # Check if user already reviewed this content
-            if self.db:
+            if self.db is not None:
                 existing = await self.db.reviews.find_one({
                     "user_id": user_id,
                     "content_id": content_id
