@@ -490,7 +490,7 @@ class AdvancedAnalyticsService:
     async def track_voice_command(self, user_id: str, command: str, success: bool, context: Dict = None):
         """Track voice command usage"""
         try:
-            if self.db:
+            if self.db is not None:
                 voice_record = {
                     "user_id": user_id,
                     "command": command,
