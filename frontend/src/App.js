@@ -611,6 +611,30 @@ function App() {
         onOpenDeviceIntegration={handleOpenDeviceIntegration}
       />
 
+      {/* Sovereignty Mode Toggle - Fixed Position */}
+      <div className="fixed top-20 right-4 z-30">
+        <SovereigntyModeToggle
+          currentUser={currentUser}
+          onToggle={handleSovereigntyToggle}
+          onOpenSettings={handleOpenSovereigntySettings}
+        />
+      </div>
+
+      {/* Voice Command Interface - Fixed Position */}
+      {showVoiceCommand && (
+        <div className="fixed bottom-20 right-4 z-30 max-w-sm">
+          <VoiceCommand
+            currentUser={currentUser}
+            onCommand={handleVoiceCommand}
+            onVolumeChange={handleVoiceVolumeChange}
+            onPlayPause={handleVoicePlayPause}
+            onSeek={() => {}}
+            onQualityChange={handleVoiceQualityChange}
+            onSearch={handleVoiceSearch}
+          />
+        </div>
+      )}
+
       {/* Main Content */}
       {renderContent()}
 
