@@ -152,6 +152,71 @@ function App() {
     setVideoPlayerContent(null);
   }, []);
 
+  // Sovereignty mode handlers
+  const handleSovereigntyToggle = useCallback((enabled, settings) => {
+    setSovereigntyMode(enabled);
+    if (enabled) {
+      console.log('Sovereignty mode enabled with settings:', settings);
+      // Enable enhanced features
+      setShowAIRecommendations(true);
+      setShowVoiceCommand(true);
+    } else {
+      console.log('Sovereignty mode disabled');
+      setShowSovereigntySettings(false);
+    }
+  }, []);
+
+  const handleOpenSovereigntySettings = useCallback(() => {
+    setShowSovereigntySettings(true);
+  }, []);
+
+  const handleCloseSovereigntySettings = useCallback(() => {
+    setShowSovereigntySettings(false);
+  }, []);
+
+  // Voice command handlers
+  const handleVoiceCommand = useCallback((action, parameters) => {
+    console.log('Voice command:', action, parameters);
+    
+    switch (action) {
+      case 'navigate':
+        if (parameters.section) {
+          setCurrentSection(parameters.section);
+        }
+        break;
+      case 'search':
+        if (parameters.query) {
+          setSearchQuery(parameters.query);
+          setShowEnhancedSearch(true);
+          setCurrentSection('search');
+        }
+        break;
+      default:
+        console.log('Unhandled voice command:', action, parameters);
+    }
+  }, []);
+
+  const handleVoiceVolumeChange = useCallback((direction) => {
+    // This would integrate with the video player
+    console.log('Voice volume change:', direction);
+  }, []);
+
+  const handleVoicePlayPause = useCallback((play) => {
+    // This would integrate with the video player
+    console.log('Voice play/pause:', play);
+  }, []);
+
+  const handleVoiceSearch = useCallback((query) => {
+    setSearchQuery(query);
+    setShowEnhancedSearch(true);
+    setCurrentSection('search');
+  }, []);
+
+  const handleVoiceQualityChange = useCallback((quality) => {
+    // This would integrate with the video player
+    console.log('Voice quality change:', quality);
+  }, []);
+
   // Content interaction handlers
   const handleItemClick = useCallback(async (content) => {
     try {
