@@ -410,7 +410,7 @@ class AIService:
     
     async def _store_recommendations(self, user_id: str, recommendations: List[Dict]):
         """Store recommendations in database"""
-        if self.db:
+        if self.db is not None:
             try:
                 for rec in recommendations:
                     rec_doc = {
