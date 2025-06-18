@@ -119,7 +119,7 @@ class SocialService:
     async def vote_review_helpful(self, review_id: str, user_id: str) -> bool:
         """Vote a review as helpful"""
         try:
-            if not self.db:
+            if self.db is None:
                 return False
             
             # Check if user already voted
