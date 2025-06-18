@@ -117,7 +117,7 @@ class AdvancedAnalyticsService:
     async def get_user_analytics(self, user_id: str) -> Optional[UserAnalytics]:
         """Get comprehensive analytics for a user"""
         try:
-            if not self.db:
+            if self.db is None:
                 return None
             
             analytics_data = await self.db.user_analytics.find_one({"user_id": user_id})
