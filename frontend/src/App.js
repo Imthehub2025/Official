@@ -22,6 +22,7 @@ import { XRVideoPlayer } from './components/XRVideoPlayer';
 import { EnhancedSearch } from './components/EnhancedSearch';
 import { DeviceIntegration } from './components/DeviceIntegration';
 import SovereigntyModeToggle from './components/SovereigntyModeToggle';
+import EnhancedSovereigntyToggle from './components/EnhancedSovereigntyToggle';
 import AIRecommendations from './components/AIRecommendations';
 import VoiceCommand from './components/VoiceCommand';
 import { useContent } from './hooks/useContent';
