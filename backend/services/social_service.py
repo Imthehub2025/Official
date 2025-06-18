@@ -168,7 +168,7 @@ class SocialService:
             )
             
             # Store in database
-            if self.db:
+            if self.db is not None:
                 await self.db.watch_parties.insert_one(party.dict())
             
             # Add to active parties
