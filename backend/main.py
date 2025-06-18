@@ -109,13 +109,20 @@ api_router = APIRouter(prefix="/api")
 
 @api_router.post("/sovereignty/enable")
 async def enable_sovereignty_mode(
-    user_id: str,
-    settings: SovereigntySettings,
-    openai_api_key: Optional[str] = None,
+    request: Dict[str, Any],
     sovereignty_service: SovereigntyService = Depends(get_service("sovereignty_service"))
 ):
     """Enable sovereignty mode for user with optional OpenAI API key"""
     try:
+        user_id = request.get("user_id")
+        settings_data = request.get("settings")
+        openai_api_key = request.get("openai_api_key")
+        
+        if not user_id or not settings_data:
+            raise HTTPException(status_code=400, detail="user_id and settings are required")
+        
+        settings = SovereigntySettings(**settings_data)
+        
         # Store OpenAI API key if provided
         if openai_api_key:
             # Update environment variable for this session
