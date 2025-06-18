@@ -363,7 +363,7 @@ class SocialService:
             
             # Get participant info
             participants_info = []
-            if self.db:
+            if self.db is not None:
                 for user_id in party.participants:
                     user = await self.db.users.find_one({"id": user_id})
                     if user:
